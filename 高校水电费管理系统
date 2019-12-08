@@ -1,0 +1,854 @@
+#include<iostream>  
+#include<string>  
+#include<fstream>  
+#include<iomanip>  
+using namespace std;    
+class Person     //人员类 
+{                          
+public:   
+        int num;//编号   
+        string name;//姓名   
+        string sex;//性别   
+        int age;//年龄      
+        double water;//用水量   
+        double power;//用电量    
+        Person(int n=0,string nm=" ",string s=" ",int a=0,double w=0.0,double p=0.0)   
+       {   
+	       num = n;    
+           name = nm;    
+           sex = s;    
+           age = a;    
+           water = w;    
+    	   power = p;  
+       }
+virtual void Input(){};   
+virtual void Output(){};  
+int GetNum(){return num;}//获取编号   
+string GetName(){return name;}//获取姓名 
+int Getage(){return age;}//获取年龄 
+double GetWater(){return water;}//获取用水量   
+double GetPower(){return power;}//获取用电量  
+};
+class Teacher:virtual public Person       //教师类 
+{  
+ public:   
+ 		string depart;//工作部门   
+ 		double watermoney;//教师水费   
+ 		double powermoney;//教师电费   
+ 		int choice1;      
+ 		int choice2;    
+ 		Teacher(int n=0,string nm=" ",string s="男",int a=0,string d="讲师",double w=0.0,double p=0.0,double wm=0.0,double pm=0.0):Person(n,nm,s,a,w,p),depart(d) 
+ 		{    
+      			watermoney=wm;    
+      			powermoney=pm;   
+ 		}
+ 		void Input()   
+		{    
+				cout<<"请输入工号："<<endl;    
+				cin>>num;   
+				cout<<"请输入姓名："<<endl;    
+				cin>>name;    
+				cout<<"请选择性别：";    
+				cout<<"1.男士  2.女士"<<endl;    
+				cout<<"请输入你的选择"<<endl;    
+				cin>>choice2;   
+				switch(choice2)    
+				{    
+     					case 1:sex="男";break;    
+     					case 2:sex="女";break;    
+     					default:cout<<"输入错误！请重新输入！"<<endl;break;    
+				}     
+				cout<<"请输入年龄："<<endl;   
+				cin>>age;    
+				cout<<"请选择工作部门："<<endl;    
+				cout<<setw(10)<<"1.讲师"<<setw(10)<<"2.教务处"<<setw(10)<<"3.财政处"<<setw(10)<<"4.总务处"<<endl;    
+				cout<<"请输入你的选择"<<endl;    
+				cin>>choice1;    
+ 				switch(choice1)    
+				{    
+						case 1:depart="讲师";break;    
+						case 2:depart="教务处";break;   
+						case 3:depart="财政处";break;    
+						case 4:depart="总务处";break;    
+						default:cout<<"输入错误！请重新输入！"<<endl;break;   
+				}    
+				cout<<"请输入本月的用水量："<<endl;   
+				cin>>water;    
+				cout<<"请输入本月的用电量："<<endl;    
+				cin>>power;    
+				watermoney=0.5*water;    
+				powermoney=0.5*power;   
+		}   
+ 		void Output()   
+		{    
+    		cout<<setw(10)<<num<<setw(10)<<name<<setw(10)<<sex<<setw(10)<<age<<setw(10)<<depart<<setw(10)<<water<<setw(10)<<power<<"   "<<setw(7)<<watermoney<<setw(9)<<powermoney<<endl; 
+		}  
+		double GetWatermoney(){return watermoney;}
+		double GetPowermoney(){return powermoney;}
+};  
+class Student:virtual public Person        //学生类 
+{  
+public:   
+   string bj;//学生班级   
+   double watermoney;//学生水费   
+   double powermoney;//学生电费   
+   int choice1;   
+   int choice2;  
+   Student(int n=0,string nm=" ",string s="男",int a=0,string z=" ",double w=0.0, double p=0.0,double wm=0.0,double pm=0.0):Person(n,nm,s,a,w,p),bj(z)  
+	{    
+			watermoney=wm;    
+			powermoney=pm;   
+	} 
+	void Input()   
+	{  
+   			cout<<"请输入学号："<<endl;    
+   			cin>>num;    
+   			cout<<"请输入姓名："<<endl;    
+   			cin>>name;   
+			cout<<"请选择性别：";    
+			cout<<"1.男生  2.女生"<<endl;    
+			cout<<"请输入你的选择"<<endl;    
+			cin>>choice2;    
+			switch(choice2)    
+			{    
+			case 1:sex="男";break;    
+			case 2:sex="女";break;    
+			default:cout<<"输入错误！请重新输入！"<<endl;break;   
+			 }    
+			cout<<"请输入年龄："<<endl;    
+			cin>>age;    
+			cout<<"请选择所在班级："<<endl;    
+			cout<<setw(10)<<"1.计科1班"<<setw(10)<<"2.计科2班"<<setw(10)<<"3.计科3班"<<setw(10)<<"4.网络3班"<<endl;    
+			cout<<"请输入你的选择"<<endl;    
+			cin>>choice1;    
+			switch(choice1)    
+			{
+			case 1:bj="计科1班";break;    
+			case 2:bj="计科2班";break;    
+			case 3:bj="计科3班";break;    
+			case 4:bj="网络3班";break;    
+			default:cout<<"输入错误！请重新输入！"<<endl;break;   
+			 }    
+			cout<<"请输入本月的用水量"<<endl;    
+			cin>>water;    
+			cout<<"请输入本月的用电量"<<endl;    
+			cin>>power;  
+			if(water<=10) 
+			watermoney=0;
+			else
+			watermoney=0.5*(water-10); 
+			if(power<=10)   
+			watermoney=0;
+			else
+			powermoney=0.5*(power-10);  
+			}   
+			void Output()   
+			{    
+			  cout<<setw(10)<<num<<setw(10)<<name<<setw(10)<<sex<<setw(10)<<age<<setw(10)<<bj<<setw(10)<<water<<setw(10)<<power<<"   "<<setw(7)<<watermoney<<setw(9)<<powermoney<<endl; 
+			}  
+			double GetWatermoney(){return watermoney;}
+		    double GetPowermoney(){return powermoney;}
+	};    
+class Stu_sys{               //学生管理系统?
+public:      
+	Student Stu[100];      
+	int top;               
+	Stu_sys(){top=0;}    
+	void Add();          //添加；   
+	void Show();         //显示；    
+	void Search();       //查询；   
+	void Edit();         //修改；  
+	void Delete();       //删除；   
+	void Total();        //统计；   
+	void Save();         //保存；   
+	void Read();         //读取； 
+	void Pay();          //充值 
+	void Judge();        //判断未缴费用户 
+}; 
+void Stu_sys::Pay(){         //充值方?
+	double money;
+	int num;
+	int f=0;
+	cout<<"请输入要充值的学生编号:"<<endl; 
+	cin>>num;
+	for(int i=0;i<top;i++){
+	if(Stu[i].GetNum()==num){
+	f=1;
+	int choice;
+	cout<<"请选择充值类型：    1.水费       2.电费"<<endl;
+	cin>>choice;
+	switch(choice){
+	case 1:{
+	cout<<"请输入充值水费的金额:"<<endl; 
+	cin>>money;
+	if(money>Stu[i].watermoney){
+		cout<<"充值金额超限！"<<endl;
+		return; 
+	}
+	else{
+		Stu[i].watermoney-=money;
+		cout<<"充值成功！"<<endl; 
+	}
+	
+    }break;
+    case 2:{
+	cout<<"请输入充值电费的金额:"<<endl; 
+	cin>>money;
+	if(money>Stu[i].powermoney){
+		cout<<"充值金额超限！"<<endl;
+		return; 
+	}
+	else{
+		Stu[i].powermoney-=money;
+		cout<<"充值成功！"<<endl; 
+	}
+	
+    }break;
+    default:cout<<"没有此选项，充值失败！"<<endl;break;
+    }
+    }
+    }
+    if(f==0)
+    cout<<"查无此人！"<<endl;
+	return; 
+}
+void Stu_sys::Judge()          //判断未缴费 
+{                 
+        int f=0; 
+	    cout<<"未缴费学生信息如下："<<endl; 
+  		for(int i=0;i<top;i++){
+  		if(Stu[i].GetWatermoney()>0||Stu[i].GetPowermoney()>0){
+  			cout<<setw(10)<<"学号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"所在班级"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl; 
+		    Stu[i].Output();
+		    f=1;
+  		}
+  		if(f==0)
+  		cout<<"人员均已缴费完毕！"<<endl; 
+        }
+}
+
+void Stu_sys::Add()//添加成员  
+{   
+		if(top>=100)     
+		{    
+			cout<<"用户名额已满！"<<endl;    
+			return;   
+		}      
+		Student s;   
+		cout<<"输入新添加的学生的信息:"<<endl;  
+		s.Input();   
+		for(int i=0;i<top;i++){
+		if (s.GetNum()==Stu[i].GetNum())    
+		{   		
+		  cout<<"该学号的学生已存在!请重新输入！"<<endl;     
+		  return;    
+		} 
+}
+Stu[top]=s; 
+top++;   
+cout<<"添加成功!"<<endl;  
+} 
+void Stu_sys::Show()//显示记录  
+{   
+		if(top==0)   
+		{    
+			cout<<"没有任何信息!"<<endl; 
+			return;   
+		}   
+		cout<<setw(10)<<"学号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"所在班级"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl;
+		for(int i=0;i<top;i++)    
+		Stu[i].Output();  
+} 
+void Stu_sys::Search()//查询  
+{    
+		if(top==0)   
+		{    
+			cout<<"没有任何信息！"<<endl;    
+			return;   
+		}
+		int choice;   
+		cout<<"请选择查找方式:1.按姓名查询 2.按用水量查询 3.按用电量查询"<<endl;   
+		cin>>choice; 
+		int f=0;  
+		switch(choice){   
+		case 1:{    
+					cout<<"请输入您要查找的姓名"<<endl;       
+					string name;    
+					cin>>name;          
+					for(int i=0;i<top;i++)    
+					{        
+							if(Stu[i].GetName()==name)     
+					{ 
+						cout<<setw(10)<<"学号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"所在班级"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl;     
+						Stu[i].Output(); 
+						f=1;   
+ 
+					}    
+					}    
+					if(f==0)   
+					cout<<"查无此人！"<<endl;  
+					return;        
+					}break;   
+			 
+					case 2:{    
+					cout<<"请输入要查找的水量:"<<endl;       
+					double water;       
+					cin>>water;            
+					for(int i=0;i<top;i++)    
+					{     
+					     if(Stu[i].GetWater()==water)      
+	  					 {
+	  	 					cout<<setw(10)<<"学号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"所在班级"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl;
+	     					Stu[i].Output(); 
+		 					f=1; 
+	  					 }
+	     
+					}     
+					if(f==0)
+					cout<<"查无此人！"<<endl;
+					return;   
+					}break;   
+					case 3:{    
+							cout<<"请输入要查找的电量:"<<endl;    
+							double power;    
+							cin>>power;    
+         
+							for(int i=0;i<top;i++)    
+							{     
+									if(Stu[i].GetPower()==power)      
+									{
+									cout<<setw(10)<<"学号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"所在班级"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl; 
+									Stu[i].Output();     
+									f=1;
+									}
+							}     
+							if(f==0)    
+							cout<<"查无此人！"<<endl; 
+							return;      
+						   }break;   
+					default :cout<<"无此选项!请重新输入!"<<endl;break;   
+					}  
+		}   
+			 
+void Stu_sys::Edit()//更改信息  
+{   
+	if(top==0)   
+	{   
+	 cout<<"没有记录！"<<endl;    
+	 return;   
+	}   
+	int num;   
+	Student h; 
+	cout<<"请输入您要修改的学号:"<<endl;   
+	cin>>num;      
+	for(int i=0;i<top;i++)   
+	{    
+    	if(Stu[i].GetNum()==num)    
+		{     
+		cout<<"请进行修改:"<<endl; 
+		h=Stu[i];   
+		Stu[i].Input(); 
+		for(int j=0;j<top;j++){
+		if(Stu[i].GetNum()==Stu[j].GetNum()&&i!=j){
+		cout<<"该学号已存在！请重新输入!"<<endl;
+		cout<<"修改失败！"<<endl; 
+		Stu[i]=h;
+		return; 
+		}
+    }
+	cout<<"修改成功"<<endl;
+	return;    
+}   
+}     
+	cout<<"查无此人!"<<endl;  
+}   
+void Stu_sys::Delete()//删除信息  
+{    
+	if(top==0)     
+	{     
+	cout<<"没有记录！"<<endl;     
+	return;    
+	}     
+	cout<<"请输入编号：";      
+	int num;            
+	cin>>num;            
+	for(int i=0;i<top;i++){              
+	if(num==Stu[i].num)        {         
+	cout<<"是否确认删除？     1、是    2、否   "<<endl;         
+	int choice;         
+	cin>>choice;         
+	switch(choice){         
+	case 1: {           
+	for(int j=i;j<top-1;j++)                 
+	Stu[j]=Stu[j+1];                           
+	cout<<"删除成功！"<<endl;            
+	top--;          };break;         
+	case 2:return;   
+	default:cout<<"没有此选项，删除失败！"<<endl;break;
+	}
+	return;        
+	}         
+	}       
+	cout<<"记录为空！"<<endl;       
+}         
+void Stu_sys::Total()//数据统计  
+{   
+		cout<<"1  学生所用水电量的总量    2  学生的水电费  "<<endl;   
+		int choice;  
+		cout<<"请输入你的选择"<<endl;  
+		cin>>choice;   
+		switch(choice)   
+		{   
+			case 1:   
+			{      
+					double zwater=0.0,zpower=0.0;     
+					for(int i=0;i<top;i++)     
+					{  
+							zwater+=Stu[i].water;      
+							zpower+=Stu[i].power;   
+					}     
+					cout<<"学生的总用水量为"<<zwater<<endl;     
+				    cout<<"学生的总用电量为"<<zpower<<endl;    
+			}break;   
+			case 2:
+			{     
+					double zwatermoney=0.0, zpowermoney=0.0;     
+					for(int i=0;i<top;i++)     
+					{      
+					        zpowermoney+=Stu[i].powermoney;      
+	   						zwatermoney+=Stu[i].watermoney;    
+					}        
+					cout<<"学生的总水费为"<<zwatermoney<<endl;    
+					cout<<"学生的总电费为"<<zpowermoney<<endl;   
+			}break;   
+			default:cout<<"输入错误。请重新输入"<<endl;break;   
+		}  
+}   
+void Stu_sys::Save()//保存学生信息  
+ {   
+	ofstream out("学生.txt",ios::out);   
+	if(!out)   
+	{    
+		cout<<"打开失败!"<<endl;    
+		return;   
+	}      
+    cout<<"打开成功!"<<endl;   
+	for(int i=0;i<top;i++)   
+    out<<Stu[i].num<<"  "<<Stu[i].name<<"  "<<Stu[i].sex<<"  "<<Stu[i].age<<"  "<<Stu[i].bj<<"  "<<Stu[i].water<<"  "<<Stu[i].power<<"  "<<Stu[i].watermoney<<"  "<<Stu[i].powermoney<<"  "<<endl;   
+	cout<<"写入成功！"<<endl;   
+    out.close(); 
+}   
+void Stu_sys::Read()//读取学生文件  
+{
+	ifstream in("学生.txt",ios::in);   
+	if(!in)   
+	{    
+		cout<<"打开失败!"<<endl;    
+		return;   
+	}   
+    int i=0;   
+    while(in>>Stu[i].num>>Stu[i].name>>Stu[i].sex>>Stu[i].age>>Stu[i].bj>>Stu[i].water >>Stu[i].power>>Stu[i].watermoney>>Stu[i].powermoney)   
+	{      
+	 	i++;   
+	 	top++;   
+	}   
+	cout<<"打开成功！"<<endl;  
+	in.close();  
+}        
+class Tea_sys
+{     //教师管理系统
+public:      
+	Teacher Tea[100];      
+	 int top;               
+	 Tea_sys(){top=0;}    
+	void Add();          //添加；   
+	void Show();         //显示；    
+	void Search();       //查询；   
+	void Edit();         //修改；  
+	void Delete();       //删除；   
+	void Total();        //统计；   
+	void Save();         //保存；   
+	void Read();         //读取；
+	void Pay();          //充值 
+	void Judge();        //判断未交费 
+	  
+}; 
+void Tea_sys::Pay(){   //缴费方法
+	double money;
+	int num;
+	int f=0;
+	cout<<"请输入要充值的教师编号:"<<endl; 
+	cin>>num;
+	for(int i=0;i<top;i++){
+	if(Tea[i].GetNum()==num){
+	f=1;
+	int choice;
+	cout<<"请选择充值类型：    1.水费       2.电费"<<endl;
+	cin>>choice;
+	switch(choice){
+	case 1:{
+	cout<<"请输入充值水费的金额:"<<endl; 
+	cin>>money;
+	if(money>Tea[i].watermoney){
+		cout<<"充值金额超限！"<<endl;
+		return; 
+	}
+	else{
+		Tea[i].watermoney-=money;
+		cout<<"充值成功！"<<endl; 
+	}
+	
+    }break;
+    case 2:{
+	cout<<"请输入充值电费的金额:"<<endl; 
+	cin>>money;
+	if(money>Tea[i].powermoney){
+		cout<<"充值金额超限！"<<endl;
+		return; 
+	}
+	else{
+		Tea[i].powermoney-=money;
+		cout<<"充值成功！"<<endl; 
+	}
+	
+    }break;
+    default:cout<<"没有此选项，充值失败！"<<endl;break;
+    }
+    }
+    }
+    if(f==0)
+    cout<<"查无此人！"<<endl;
+	return; 
+}
+void Tea_sys::Judge()          //判断未缴费 
+{                 
+        int f=0; 
+	    cout<<"未缴费教师信息如下："<<endl; 
+  		for(int i=0;i<top;i++){
+  		if(Tea[i].GetWatermoney()>0||Tea[i].GetPowermoney()>0){
+  			cout<<setw(10)<<"工号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"工作部门"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl; 
+		    Tea[i].Output();
+		    f=1;
+  		}
+  		if(f==0)
+  		cout<<"人员均已缴费完毕！"<<endl; 
+        }
+}
+void Tea_sys::Add()//添加成员  
+{   
+	if(top>=100)     
+	{    
+		cout<<"用户名额已满！"<<endl;    
+		return;   
+	}      
+	Teacher s;   
+	cout<<"输入新添加的教师的信息:"<<endl;  
+	s.Input();   
+	for(int i=0;i<top;i++){
+	if (s.GetNum()==Tea[i].GetNum())    
+	{   
+			cout<<"该工号的教师已存在!请重新输入！"<<endl;     
+			return;    
+	} 
+}
+Tea[top]=s; 
+top++;   
+cout<<"添加成功!"<<endl;  
+} 
+void Tea_sys::Show()//显示记录  
+{   
+		if(top==0)   
+		{    
+			cout<<"没有任何信息!"<<endl; 
+			return;   
+		}   
+		cout<<setw(10)<<"工号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"工作部门"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl;   
+		for(int i=0;i<top;i++)    
+		Tea[i].Output();  
+} 
+void Tea_sys::Search()//查询  
+{    
+			if(top==0)   
+			{    
+				cout<<"没有任何信息！"<<endl;    
+				return;   
+			}
+			int choice;   
+			cout<<"请选择查找方式:1.按姓名查询 2.按用水量查询 3.按用电量查询"<<endl;   
+			cin>>choice; 
+			int f;
+			f=0;  
+			switch(choice){   
+			case 1:{    
+						cout<<"请输入您要查找的姓名"<<endl;       
+						string name;    
+						cin>>name;    
+        
+						for(int i=0;i<top;i++)    
+						{        
+							if(Tea[i].GetName()==name)     
+						{      
+							cout<<setw(10)<<"工号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"工作部门"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl; 
+							Tea[i].Output();  
+							f=1;
+   
+			            }    
+                        } 
+						if(f==0)
+						cout<<"查无此人！"<<endl;   
+						return;    
+						}break;   
+			 
+			case 2:{    
+					cout<<"请输入要查找的水量:"<<endl;       
+					double water;       
+					cin>>water;   
+        
+					for(int i=0;i<top;i++)    
+					{     if(Tea[i].GetWater()==water)      
+	  					{
+							  cout<<setw(10)<<"工号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"工作部门"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl; 
+	  						  Tea[i].Output(); 
+	  							f=1;
+						}
+	       
+					} 
+					if(f==0)
+					cout<<"查无此人！"<<endl;  
+					return;      
+
+			}break;   
+			case 3:{    
+						cout<<"请输入要查找的电量:"<<endl;    
+						double power;    
+						cin>>power;    
+         
+						for(int i=0;i<top;i++)    
+						{     
+							if(Tea[i].GetPower()==power) {  
+							cout<<setw(10)<<"工号"<<setw(10)<<"姓名"<<setw(10)<<"性别"<<setw(10)<<"年龄"<<setw(10)<<"工作部门"<<setw(10)<<"用水量"<<setw(10)<<"用电量"<<setw(10)<<"缴纳水费"<<setw(10)<<"缴纳电费"<<endl; 
+							Tea[i].Output();  
+							f=1;
+							}
+						}   
+						if(f==0)
+						cout<<"查无此人！"<<endl;   
+						return;  
+      
+			}break;   
+			default :cout<<"无此选项!请重新输入!"<<endl;break;   
+			}  
+}   
+			 
+void Tea_sys::Edit()//更改信息  
+{   
+	if(top==0)   
+	{    
+	     cout<<"没有记录！"<<endl;    
+	 	 return;   
+	}   
+	int num;   
+	Teacher h; 
+	cout<<"请输入您要修改的工号:"<<endl;   
+	cin>>num;      
+	for(int i=0;i<top;i++)   
+	{    
+    if(Tea[i].GetNum()==num)    
+	{     
+	cout<<"请进行修改:"<<endl; 
+	h=Tea[i];   
+	Tea[i].Input(); 
+	for(int j=0;j<top;j++){
+	if(Tea[i].GetNum()==Tea[j].GetNum()&&i!=j){
+		cout<<"该工号已存在！请重新输入!"<<endl;
+		cout<<"修改失败！"<<endl; 
+		Tea[i]=h;
+		return; 
+	}
+    }
+	cout<<"修改成功"<<endl;
+	return;    
+}   
+}     
+cout<<"查无此人!"<<endl;  
+}   
+void Tea_sys::Delete()//删除信息  
+{    
+	if(top==0)     
+	{     
+		cout<<"没有记录！"<<endl;     
+		return;    
+	}     
+	cout<<"请输入编号：";      
+	int num;            
+	cin>>num;            
+	for(int i=0;i<top;i++){              
+	if(num==Tea[i].num)        {         
+	cout<<"是否确认删除？     1、是    2、否   "<<endl;         
+	int choice;         
+	cin>>choice;         
+	switch(choice){         
+	case 1: {           
+	for(int j=i;j<top-1;j++)                 
+	Tea[j]=Tea[j+1];                           
+	cout<<"删除成功！"<<endl;            
+	top--;          };break;         
+	case 2:return;   
+	default:cout<<"没有此选项，删除失败！"<<endl;break;
+	}
+	return;        
+	}         
+	}       
+	cout<<"记录为空！"<<endl;       
+}         
+void Tea_sys::Total()//数据统计  
+{   
+	cout<<"1  教师所用水电量的总量    2  教师的水电费  "<<endl;   
+	int choice;  
+	cout<<"请输入你的选择"<<endl;  
+	cin>>choice;   
+	switch(choice)   
+	{   
+	case 1:   
+	{      
+	double zwater=0.0,zpower=0.0;     
+	for(int i=0;i<top;i++)     
+	{  
+	zwater+=Tea[i].water;      
+	zpower+=Tea[i].power;   
+	}     
+	cout<<"教师的总用水量为"<<zwater<<endl;     
+	cout<<"教师的总用电量为"<<zpower<<endl;    
+	}break;   
+	case 2:
+	{     
+	double zwatermoney=0.0, zpowermoney=0.0;     
+	for(int i=0;i<top;i++)     
+	{     
+		 zpowermoney+=Tea[i].powermoney;      
+	   	zwatermoney+=Tea[i].watermoney;    
+	}        
+	cout<<"教师的总水费为"<<zwatermoney<<endl;    
+	cout<<"教师的总电费为"<<zpowermoney<<endl;   
+	}break;   
+	default:cout<<"输入错误。请重新输入"<<endl;break;   
+	}  
+}   			
+ 
+void Tea_sys::Save()//保存教师信息  
+{   
+    ofstream out("教师.txt",ios::out);   
+	if(!out)   
+	{    
+	cout<<"打开失败!"<<endl;    
+	return;  
+	}  
+	cout<<"打开成功!"<<endl;   
+	for(int i=0;i<top;i++)   
+    out<<Tea[i].num<<"  "<<Tea[i].name<<"  "<<Tea[i].sex<<"  "<<Tea[i].age<<"  "<<Tea[i].depart<<"  "<<Tea[i].water<<"  "<<Tea[i].power<<"  "<<Tea[i].watermoney<<"  "<<Tea[i].powermoney<<"  "<<endl; 
+    cout<<"写入成功！"<<endl;  
+	out.close();  
+}  
+ void Tea_sys::Read()//读取教师文件  
+{   
+    ifstream in("教师.txt",ios::in);   
+    if(!in)   
+	{    
+	     cout<<"打开失败!"<<endl;   
+	     return;  
+    }   
+	int i=0;      
+	while(in>>Tea[i].num>>Tea[i].name>>Tea[i].sex>>Tea[i].age>>Tea[i].depart>>Tea[i].water>>Tea[i].power>>Tea[i].watermoney>>Tea[i].powermoney)  
+	{       
+	       i++;    
+	       top++;   
+	}   
+	cout<<"读取成功！"<<endl;   
+	in.close();  
+}     
+void TeaMenu();  
+void StuMenu();   
+int main()  //主函数 
+{   
+    int choice;      
+	do{     
+	cout<<"\n****************************************************************************************************************\n"<<endl;    
+	cout<<"                             闽南师范大学水电费管理系统 \n"<<endl;    
+	cout<<"\n"<<endl;
+	cout<<"请选择需要使用的系统编号:"<<endl;
+	cout<<endl;    
+	cout<<" \t1.教师水电费管理系统 \t2.学生水电费管理系统 \t0.退出系统     "<<endl;    
+    cout<<"\n"<<endl;    
+	cout<<"\n请输入您的选择:";    
+	cin>>choice;    
+	switch(choice)   
+	{           
+	case 1:TeaMenu();break;        
+	case 2:StuMenu();break;     
+	case 0:cout<<"\n您已成功退出系统!"<<endl;break;     
+	default:cout<<"\n没有此选项.请重选."<<endl;break;    
+	}   
+	}
+	while(choice!=0);     
+	cout<<"\n------------------------------欢迎您下次使用!---------------------------------"<<endl;   
+	return 0;  
+	}  
+void TeaMenu(){    
+    Tea_sys t;   
+	int choice;  
+	while(choice!=0)  
+	{     
+	cout<<"\n*********************************************************************************************************\n"<<endl;    
+	cout<< " \n                           闽南师范大学教师水电费管理系统"<<endl;    
+	cout<<"\n"<<endl;   
+	cout<<"  1.添加  2.查找  3.显示  4.编辑  5.删除  6.统计  7.保存  8.读取  9.充值   10.显示未交费    0.退出 "<<endl;    
+	cout<<"\n"<<endl;   
+	cout<<"\n*********************************************************************************************************\n"<<endl;
+	cout<<"\n输入您操作的选项：";    
+	cin>>choice;    
+	switch(choice)    
+	{   
+	    case 1:t.Add();break;     
+		case 2:t.Search();break;      
+		case 3:t.Show();break; 
+		case 4:t.Edit();break;     
+		case 5:t.Delete();break;     
+	    case 6:t.Total();break; 
+		case 7:t.Save();break;        
+		case 8:t.Read();break;              
+		case 9:t.Pay();break; 
+		case 10:t.Judge();break;
+		case 0:cout<<"退出成功!"<<endl;break;     
+		default:cout<<"无此选项!请重试!"<<endl;break;    
+	}   
+	}  
+	} 
+void StuMenu()  
+{    
+	    Stu_sys s;   
+		int choice;  
+		while(choice!=0)   
+		{     
+		cout<<"\n*****************************************************************************************\n"<<endl;    
+		cout<<" \n                            闽南师范大学学生水电费管理系统"<<endl;    cout<<"\n"<<endl;    
+		cout<<"  1.添加  2.查找  3.显示  4.编辑  5.删除  6.统计  7.保存  8.读取  9.缴费   10.显示未交费   0.退出 "<<endl;    
+		cout<<"\n"<<endl; 
+		cout<<"\n*****************************************************************************************\n"<<endl;   
+		cout<<"\n输入您操作的选项：";    
+		cin>>choice;   
+		switch(choice){    
+		case 1:s.Add();break;     
+		case 2:s.Search();break;      
+		case 3:s.Show();break; 
+		case 4:s.Edit();break;     
+		case 5:s.Delete();break;    
+		case 6:s.Total();break;
+		case 7:s.Save();break;        
+		case 8:s.Read();break;              
+		case 9:s.Pay();break; 
+		case 10:s.Judge();break; 
+        case 0:cout<<"退出成功!"<<endl;break;     
+		default:cout<<"无此选项!请重试!"<<endl;break;    
+		}   
+		}  
+	}     
